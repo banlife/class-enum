@@ -1,0 +1,21 @@
+{
+  "name": "class-enum",
+  "version": "0.0.1",
+  "description": "class enum",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "compile": "tsc",
+    "build": "jest && tsc"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.9",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/jest": "^27.4.1",
+    "jest": "^27.5.1",
+    "typescript": "4.4"
+  }
+}
