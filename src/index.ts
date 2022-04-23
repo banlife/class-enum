@@ -1,3 +1,5 @@
+import {EnumNotFound} from "./exception/ClassEnumException";
+
 export default abstract class ClassEnum<T> {
     public title: string
 
@@ -6,11 +8,12 @@ export default abstract class ClassEnum<T> {
     }
 
     public static values<T>(): T[] {
-        return this.getValues();
+        const enums = this.getEnums<T>();
+        return Object.values(enums);
     }
 
-    private static getValues() {
-        const classEnums = [];
+    private static getEnums<T>(): { [index: string]: T } {
+        const classEnums: { [index: string]: T } = {};
         for (const name of Object.getOwnPropertyNames(this)) {
             if (name === 'prototype') {
                 continue;
@@ -21,32 +24,18 @@ export default abstract class ClassEnum<T> {
                 continue;
             }
 
-            classEnums.push(descriptor.value)
+            classEnums[name] = descriptor.value
         }
 
         return classEnums;
     }
 
-// @ts-ignore
-    public static valueOf(value: string): T {
-        if (!value || value === '') {
-            console.error(`잘못된 값 입니다. value=${value}`)
-            throw new Error(`잘못된 값 입니다. value=${value}`)
+    public static valueOf<T>(value: string): T {
+        const enums = this.getEnums<T>();
+        if (!(value in enums)) {
+            throw new EnumNotFound(value)
         }
-
-        const property = this.values().find((property) => {
-            return property.value === value
-        })
-
-        if (property === undefined) {
-            console.error(`${value}맞는 값을 찾을 수 없습니다.`)
-            throw new Error(`${value}맞는 값을 찾을 수 없습니다. ${this.name}`)
-        }
-
-        return property
+        return enums[value];
     }
 
-    public equals(o: ClassEnum<T>) {
-        return this.value === o.value
-    }
 }
