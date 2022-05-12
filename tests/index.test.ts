@@ -1,5 +1,5 @@
-import ClassEnum from '@/ClassEnum'
-import { EnumNotFound } from '@/exception/ClassEnumException'
+import ClassEnum from '../src/ClassEnum'
+import { EnumNotFound } from '../src/exception/ClassEnumException'
 
 test('Enum simple reference matching', () => {
   // given

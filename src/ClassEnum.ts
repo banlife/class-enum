@@ -1,4 +1,4 @@
-import { EnumNotFound } from '@/exception/ClassEnumException'
+import { EnumNotFound } from './exception/ClassEnumException'
 
 export default abstract class ClassEnum<T> {
   protected constructor() {}
