@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "compile": "tsc",
-    "build": "jest && tsc"
+    "clean": "rm -rf ./dist",
+    "build": "jest && tsc",
+    "build:clean": "rm -rf ./dist && jest && tsc"
   },
   "_moduleAliases": {
     "@": "src"
@@ -24,9 +26,10 @@
     "eslint": "^8.15.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
-    "jest": "^27.5.1",
+    "jest": "^28.1.0",
     "module-alias": "^2.2.2",
     "prettier": "^2.6.2",
+    "ts-jest": "^28.0.2",
     "typescript": "4.4"
   },
   "dependencies": {

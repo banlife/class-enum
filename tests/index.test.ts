@@ -5,6 +5,13 @@ test('Enum simple reference matching', () => {
   // given
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -19,6 +26,13 @@ test('The count of ClassEnum types', () => {
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -33,6 +47,13 @@ test('The values contains all values', () => {
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -49,6 +70,13 @@ test('Collects only ClassEnum types', () => {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
     public static readonly OTHER = 1
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -62,11 +90,25 @@ test('Collects only same types of ClassEnum', () => {
   // given
   class Other extends ClassEnum<Other> {
     public static readonly OTHER = new Other('other')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -81,6 +123,13 @@ test("The dog-enum can't be cat-enum", () => {
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
@@ -95,6 +144,13 @@ test('If the enum is not found, error occurs', () => {
   class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
     public static readonly CAT = new Animal('cat')
+
+    private readonly title!: string
+
+    public constructor(title: string) {
+      super()
+      this.title = title
+    }
   }
 
   // when
