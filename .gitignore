@@ -169,4 +169,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # class-enum
-example/*.js
+example/dist

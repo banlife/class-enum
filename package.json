@@ -8,7 +8,8 @@
     "compile": "tsc",
     "clean": "rm -rf ./dist",
     "build": "jest && tsc",
-    "build:clean": "rm -rf ./dist && jest && tsc"
+    "build:clean": "rm -rf ./dist && jest && tsc",
+    "build:example": "tsc --project ./example"
   },
   "author": "",
   "license": "MIT",
