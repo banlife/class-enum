@@ -4,6 +4,19 @@ import { EnumNotFound } from '../src/exception/ClassEnumException'
 test('Enum simple reference matching', () => {
   // given
   class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal()
+  }
+
+  // when
+  const dog = Animal.DOG
+
+  // expected
+  expect(dog).toEqual(Animal.DOG)
+})
+
+test('Enum simple reference matching with title', () => {
+  // given
+  class Animal extends ClassEnum<Animal> {
     public static readonly DOG = new Animal('dog')
 
     private readonly title!: string
