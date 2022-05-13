@@ -1,7 +1,7 @@
 {
   "name": "class-enum",
-  "version": "0.0.1",
-  "description": "class enum",
+  "version": "0.0.1-beta.1",
+  "description": "Extendable class-enum on typescript",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -11,8 +11,18 @@
     "build:clean": "rm -rf ./dist && jest && tsc",
     "build:example": "tsc --project ./example"
   },
-  "author": "",
+  "homepage": "https://github.com/banlife/class-enum.git",
+  "keywords": [
+    "enum",
+    "class",
+    "typescript"
+  ],
+  "author": "banlife <developer@ban-life.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/banlife/class-enum.git"
+  },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.9",
