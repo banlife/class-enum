@@ -1,14 +1,13 @@
 {
   "name": "class-enum",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-nightly.1",
   "description": "Extendable class-enum on typescript",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "compile": "tsc",
     "clean": "rm -rf ./dist",
-    "build": "jest && tsc",
-    "build:clean": "rm -rf ./dist && jest && tsc",
+    "build": "rm -rf ./dist && jest && tsc",
     "build:example": "tsc --project ./example"
   },
   "homepage": "https://github.com/banlife/class-enum.git",

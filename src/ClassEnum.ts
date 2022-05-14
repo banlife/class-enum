@@ -1,4 +1,4 @@
-import { EnumNotFound } from './exception/ClassEnumException'
+import { EnumNotFound } from './exception'
 
 export default abstract class ClassEnum<T> {
   private readonly value!: string
@@ -9,7 +9,9 @@ export default abstract class ClassEnum<T> {
 
   public static values<T>(): T[] {
     const enums = this.getEnums<T>()
-    return Object.values(enums)
+    return Object.keys(enums).map(function (name) {
+      return enums[name]
+    })
   }
 
   private static getEnums<T>(): { [index: string]: T } {
@@ -20,10 +22,11 @@ export default abstract class ClassEnum<T> {
       }
 
       const descriptor = Object.getOwnPropertyDescriptor(this, name)
-      if (!descriptor || descriptor.value.constructor.name !== this.name) {
+      if (!descriptor || !(descriptor.value instanceof this)) {
         continue
       }
 
+      // @ts-ignore
       classEnums[name] = descriptor.value
     }
 
