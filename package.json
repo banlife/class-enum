@@ -2,7 +2,7 @@
   "name": "class-enum",
   "version": "0.0.1-beta.1",
   "description": "Extendable class-enum on typescript",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "compile": "tsc",
@@ -16,6 +16,10 @@
     "enum",
     "class",
     "typescript"
+  ],
+  "files": [
+    "dist",
+    "README.md"
   ],
   "author": "banlife <developer@ban-life.com>",
   "license": "MIT",
