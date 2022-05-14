@@ -18,8 +18,10 @@
   ],
   "files": [
     "dist",
+    "types",
     "README.md"
   ],
+  "types": "types/index.d.ts",
   "author": "banlife <developer@ban-life.com>",
   "license": "MIT",
   "repository": {
