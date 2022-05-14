@@ -9,6 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
     "typeRoots": ["./types"],
+    "declaration": true,
+    "declarationDir": "./types"
   },
   "include": ["src/**/*"]
 }

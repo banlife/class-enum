@@ -1,0 +1,1 @@
+export { EnumNotFound } from './ClassEnumException';
