@@ -1,12 +1,15 @@
 import ClassEnum from '../src/ClassEnum'
+import Enum from '../src/Enum'
 
+@Enum
 class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal('DOG')
-  public static readonly CAT = new Animal('CAT')
+  public static readonly DOG = new Animal()
+  public static readonly CAT = new Animal()
 }
 
+@Enum
 class Other extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal('DOG')
+  public static readonly DOG = new Animal()
 }
 
 console.log(Animal.DOG.equals(Animal.DOG))

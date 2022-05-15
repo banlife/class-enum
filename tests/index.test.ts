@@ -1,10 +1,12 @@
 import ClassEnum from '../src/ClassEnum'
-import { EnumNotFound } from '../src/exception/ClassEnumException'
+import { EnumNotFound } from '../src/exception'
+import Enum from '../src/Enum'
 
 test('Enum simple reference matching', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
+    public static readonly DOG = new Animal()
   }
 
   // when
@@ -14,11 +16,24 @@ test('Enum simple reference matching', () => {
   expect(dog).toEqual(Animal.DOG)
 })
 
+test('Decorator extend class', () => {
+  // given
+  @Enum
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal()
+  }
+
+  // expected
+  expect(Animal.DOG).toEqual(Animal.DOG)
+  expect(Animal.DOG.name()).toEqual('DOG')
+})
+
 test('Enum name', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
   }
 
   // expected
@@ -27,14 +42,16 @@ test('Enum name', () => {
 
 test('Enum equals', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
   }
 
+  @Enum
   class Other extends ClassEnum<Other> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
   }
 
   // expected
@@ -44,13 +61,14 @@ test('Enum equals', () => {
 
 test('Enum simple reference matching with title', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
+    public static readonly DOG = new Animal('my dog')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -64,14 +82,15 @@ test('Enum simple reference matching with title', () => {
 
 test('The count of ClassEnum types', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -85,14 +104,15 @@ test('The count of ClassEnum types', () => {
 
 test('The values contains all values', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -107,15 +127,16 @@ test('The values contains all values', () => {
 
 test('Collects only ClassEnum types', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
     public static readonly OTHER = 1
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -129,25 +150,26 @@ test('Collects only ClassEnum types', () => {
 
 test('Collects only same types of ClassEnum', () => {
   // given
+  @Enum
   class Other extends ClassEnum<Other> {
-    public static readonly OTHER = new Other('OTHER', 'other')
+    public static readonly OTHER = new Other('other')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -161,14 +183,15 @@ test('Collects only same types of ClassEnum', () => {
 
 test("The dog-enum can't be cat-enum", () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
@@ -182,14 +205,15 @@ test("The dog-enum can't be cat-enum", () => {
 
 test('If the enum is not found, error occurs', () => {
   // given
+  @Enum
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
     private readonly title!: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
