@@ -109,4 +109,37 @@ console.log(Animal.DOG.equals(Other.DOG)) // false
 
 ## 쓰임새
 
-작성예정
+### vuejs
+
+```vue
+<template>
+  <select v-model="selectedAnimal">
+    <option v-for="animal in Animal.values()" :key="animal.name()" :value="animal">{{ animal.title }}</option>
+  </select>
+
+  <p :style="{color: selectedAnimal.color}">selected:{{ selectedAnimal.name() }}</p>
+</template>
+
+<script setup lang="ts">
+import { ClassEnum } from "class-enum";
+import { ref } from "vue";
+
+class Animal extends ClassEnum<Animal> {
+  public static readonly DOG = new Animal("DOG", "cute dog", "red");
+  public static readonly CAT = new Animal("CAT", "beautiful cat", "green");
+  public static readonly MONKEY = new Animal("MONKEY", "big money", "blue");
+
+  public readonly title!: string;
+  public readonly color!: string;
+
+  public constructor(value: string, title: string, color: string) {
+    super(value);
+    this.title = title;
+    this.color = color;
+  }
+}
+
+const selectedAnimal = ref(Animal.DOG);
+</script>
+
+```
