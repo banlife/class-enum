@@ -13,18 +13,6 @@ typescript의 enum은 숫자, 문자열 정도의 형식만 지원하기 때문�
 $ npm i class-enum
 ```
 
-## 설정
-
-### typescript
-
-```json
-{
-  "compilerOptions": {
-    "experimentalDecorators": true
-  }
-}
-```
-
 ## 사용방법
 
 ### 기본 정의
