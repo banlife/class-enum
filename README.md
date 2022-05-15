@@ -1,3 +1,5 @@
+![npm:version](https://flat.badgen.net/npm/v/class-enum)
+
 # class-enum
 
 class-enum은 typescript enum을 대체하기 위하여 만들어졌습니다.  
