@@ -1,6 +1,6 @@
 {
   "name": "class-enum",
-  "version": "0.0.1-nightly.8",
+  "version": "0.0.1-beta.1",
   "description": "Extendable class-enum on typescript",
   "main": "dist/index.js",
   "scripts": {
