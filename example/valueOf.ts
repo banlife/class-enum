@@ -1,8 +1,8 @@
-import ClassEnum from '../src/ClassEnum'
+import { ClassEnum } from '../src'
 
-export default class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal()
-  public static readonly CAT = new Animal()
+class Animal extends ClassEnum<Animal> {
+  public static readonly DOG = new Animal('DOG')
+  public static readonly CAT = new Animal('CAT')
 }
 
 console.log(Animal.valueOf('DOG'))

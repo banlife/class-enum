@@ -1,1 +1,1 @@
-export { default } from './ClassEnum'
+export { default as ClassEnum } from './ClassEnum'

@@ -2,20 +2,25 @@
   "name": "class-enum",
   "version": "0.0.1-beta.1",
   "description": "Extendable class-enum on typescript",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "jest",
     "compile": "tsc",
-    "clean": "rm -rf ./dist",
-    "build": "jest && tsc",
-    "build:clean": "rm -rf ./dist && jest && tsc",
-    "build:example": "tsc --project ./example"
+    "clean": "rm -rf ./dist ./types",
+    "build": "rm -rf ./dist ./types && jest && tsc",
+    "build:example": "rm -rf ./example/dist && tsc --project ./example"
   },
   "homepage": "https://github.com/banlife/class-enum.git",
   "keywords": [
     "enum",
     "class",
     "typescript"
+  ],
+  "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "README.md"
   ],
   "author": "banlife <developer@ban-life.com>",
   "license": "MIT",
@@ -26,9 +31,10 @@
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.9",
+    "@babel/plugin-proposal-decorators": "^7.17.9",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^27.5.1",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",

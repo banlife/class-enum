@@ -1,14 +1,14 @@
-import ClassEnum from '../src/ClassEnum'
+import { ClassEnum } from '../src'
 
-export default class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal()
-  public static readonly CAT = new Animal()
+class Animal extends ClassEnum<Animal> {
+  public static readonly DOG = new Animal('DOG')
+  public static readonly CAT = new Animal('CAT')
 }
 
-const dog = Animal.valueOf<Animal>('DOG')
-const cat = Animal.valueOf<Animal>('CAT')
+class Other extends ClassEnum<Animal> {
+  public static readonly DOG = new Animal('DOG')
+}
 
-console.log(dog === dog)
-console.log(dog === cat)
-console.log(dog === Animal.DOG)
-console.log(dog === Animal.valueOf<Animal>('DOG'))
+console.log(Animal.DOG.equals(Animal.DOG))
+console.log(Animal.DOG.equals(Animal.CAT))
+console.log(Animal.DOG.equals(Other.DOG))
