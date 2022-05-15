@@ -1,9 +1,11 @@
 import { EnumNotFound } from './exception'
 
 export default abstract class ClassEnum<T> {
-  value: string = ''
+  private readonly value!: string
 
-  constructor() {}
+  constructor(value: string) {
+    this.value = value
+  }
 
   public static values<T>(): T[] {
     const enums = this.getEnums<T>()

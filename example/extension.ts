@@ -1,15 +1,14 @@
-import { ClassEnum, Enum } from '../src'
+import { ClassEnum } from '../src'
 
-@Enum
 class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal('My Dog', 3)
-  public static readonly CAT = new Animal('Cute Cat', 6)
+  public static readonly DOG = new Animal('DOG', 'My Dog', 3)
+  public static readonly CAT = new Animal('CAT', 'Cute Cat', 6)
 
-  private readonly title
-  private readonly age
+  private readonly title!: string
+  private readonly age!: number
 
-  public constructor(title: string, age: number) {
-    super()
+  public constructor(value: string, title: string, age: number) {
+    super(value)
     this.title = title
     this.age = age
   }

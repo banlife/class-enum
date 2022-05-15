@@ -15,8 +15,6 @@ $ npm i class-enum
 
 ### typescript
 
-타입스크립트 설정 파일에 `"experimentalDecorators": true`를 추가해주세요.
-
 ```json
 {
   "compilerOptions": {
@@ -29,16 +27,14 @@ $ npm i class-enum
 
 ### 기본 정의
 
-- `ClassEnum`클래스 상속을 통하여 상수를 선언합니다.
-- 클래스 상단에 `@Enum` 데코레이터를 추가합니다.
+`ClassEnum`클래스 상속을 통하여 상수를 선언합니다. 첫 번째 인자로 unique value 문자열을 넣습니다.
 
 ```typescript
 import { ClassEnum, Enum } from 'class-enum'
 
-@Enum
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal()
-    public static readonly CAT = new Animal()
+    public static readonly DOG = new Animal("DOG")
+    public static readonly CAT = new Animal("CAT")
     public static readonly MOUSE = "foo" // ignored in ClassEnum
 }
 ```
@@ -46,16 +42,15 @@ class Animal extends ClassEnum<Animal> {
 ### 확장
 
 ```typescript
-@Enum
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('My Dog', 3)
-    public static readonly CAT = new Animal('Cute Cat', 6)
+    public static readonly DOG = new Animal('DOG', 'My Dog', 3)
+    public static readonly CAT = new Animal('CAT', 'Cute Cat', 6)
 
-    private readonly title
-    private readonly age
+    private readonly title!: string
+    private readonly age!: number
 
-    public constructor(title: string, age: number) {
-        super()
+    public constructor(value: string, title: string, age: number) {
+        super(value)
         this.title = title
         this.age = age
     }
