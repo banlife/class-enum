@@ -1,8 +1,7 @@
 # class-enum
 
 class-enum은 typescript enum을 대체하기 위하여 만들어졌습니다.  
-typescript의 enum은 숫자, 문자열 정도의 형식만 지원하기 때문에 추가적인 기능 확장에 아쉬움이 있습니다. 따라서 생성자
-지원이 가능한 자바 형태의 enum을 만들기로 했습니다.
+typescript의 enum은 숫자, 문자열 정도의 형식만 지원하기 때문에 추가적인 기능 확장에 아쉬움이 있습니다. 따라서 생성자 지원이 가능한 자바 형태의 enum을 만들기로 했습니다.
 
 ## 설치
 
@@ -28,7 +27,7 @@ $ npm i class-enum
 
 ## 사용방법
 
-### Enum 정의
+### 기본 정의
 
 - `ClassEnum`클래스 상속을 통하여 상수를 선언합니다.
 - 클래스 상단에 `@Enum` 데코레이터를 추가합니다.
@@ -45,6 +44,37 @@ class Animal extends ClassEnum<Animal> {
 }
 ```
 
+### 확장
+
+```typescript
+@Enum
+class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal('My Dog', 3)
+    public static readonly CAT = new Animal('Cute Cat', 6)
+
+    private readonly title
+    private readonly age
+
+    public constructor(title: string, age: number) {
+        super()
+        this.title = title
+        this.age = age
+    }
+
+    public printTitle() {
+        console.log(this.title)
+    }
+
+    public getAge() {
+        return this.age
+    }
+}
+
+Animal.DOG.printTitle() // My Dog
+console.log(`cat age: ${Animal.CAT.getAge()}`) // cat age: 6
+
+```
+
 ## 기능
 
 ### values()
@@ -52,7 +82,7 @@ class Animal extends ClassEnum<Animal> {
 Enum 값을 모두 가져옵니다.
 
 ```typescript
-console.log(Animal.values()) // [ Animal {}, Animal {} ]
+console.log(Animal.values()) // [ Animal { value: 'DOG' }, Animal { value: 'CAT' } ]
 ```
 
 ### valueOf(s: string)
