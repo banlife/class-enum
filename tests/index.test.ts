@@ -1,6 +1,5 @@
-import ClassEnum from '../src/ClassEnum'
+import { ClassEnum, Enum } from '../src'
 import { EnumNotFound } from '../src/exception'
-import Enum from '../src/Enum'
 
 test('Enum simple reference matching', () => {
   // given

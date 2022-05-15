@@ -33,8 +33,7 @@ $ npm i class-enum
 - 클래스 상단에 `@Enum` 데코레이터를 추가합니다.
 
 ```typescript
-import ClassEnum from "class-enum"
-import Enum from "class-enum"
+import { ClassEnum, Enum } from 'class-enum'
 
 @Enum
 class Animal extends ClassEnum<Animal> {

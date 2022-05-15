@@ -1,5 +1,4 @@
-import ClassEnum from '../src/ClassEnum'
-import Enum from '../src/Enum'
+import { ClassEnum, Enum } from '../src'
 
 @Enum
 class Animal extends ClassEnum<Animal> {
