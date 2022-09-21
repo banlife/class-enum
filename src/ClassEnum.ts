@@ -33,9 +33,12 @@ export default abstract class ClassEnum<T> {
     return classEnums
   }
 
-  public static valueOf<T>(value: string): T {
+  public static valueOf<T>(value: string, defaultEnum: T | null = null): T {
     const enums = this.getEnums<T>()
     if (!(value in enums)) {
+      if (defaultEnum !== null) {
+        return defaultEnum
+      }
       throw new EnumNotFound(value)
     }
     return enums[value]

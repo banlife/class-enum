@@ -213,3 +213,24 @@ test('If the enum is not found, error occurs', () => {
   // expected
   expect(mouse).toThrow(EnumNotFound)
 })
+
+test('Returns ETC if specified defaultValue in valueOf', () => {
+  // given
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal('DOG', 'my dog')
+    public static readonly ETC = new Animal('ETC', 'etc')
+
+    readonly title!: string
+
+    public constructor(value: string, title: string) {
+      super(value)
+      this.title = title
+    }
+  }
+
+  // when
+  const etc = Animal.valueOf('MOUSE', Animal.ETC)
+
+  // expected
+  expect(etc).toEqual(Animal.ETC)
+})
