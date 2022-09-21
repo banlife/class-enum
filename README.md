@@ -133,3 +133,18 @@ const selectedAnimal = ref(Animal.DOG);
 </script>
 
 ```
+
+## 테스트
+
+```bash
+$ npm run clean
+$ npm run test
+```
+
+## 빌드&배포
+
+```bash
+$ npm run clean
+$ npm run build
+$ npm publish
+```
