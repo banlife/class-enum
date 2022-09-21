@@ -25,6 +25,16 @@ test('Decorator extend class', () => {
   expect(Animal.DOG.name()).toEqual('DOG')
 })
 
+test('same value', () => {
+  // given
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal('DOG')
+  }
+
+  // expected
+  expect(Animal.DOG.value).toEqual("DOG")
+})
+
 test('Enum name', () => {
   // given
   class Animal extends ClassEnum<Animal> {
