@@ -1,4 +1,4 @@
-import { ClassEnum } from '../src'
+import { ClassEnum } from '../../src'
 
 class Animal extends ClassEnum<Animal> {
   public static readonly DOG = new Animal('DOG', 'My Dog', 3)

@@ -2,12 +2,10 @@
 
 # class-enum
 
-The "class-enum" was developed to replace the TypeScript enum.   
-Since TypeScript's enum only supports formats like numbers and strings, it is lacking in terms of feature expansion.  
-As a result, we decided to create an enum similar to Java's style that supports constructors.  
-The "class-enum" can be used in the same way as class constants and offers several convenient features.
+class-enum은 typescript enum을 대체하기 위하여 만들어졌습니다.  
+typescript의 enum은 숫자, 문자열 정도의 형식만 지원하기 때문에 추가적인 기능 확장에 아쉬움이 있습니다. 따라서 생성자 지원이 가능한 자바 형태의 enum을 만들기로 했습니다.
 
-## Installing
+## 설치
 
 ### NPM
 
@@ -15,12 +13,11 @@ The "class-enum" can be used in the same way as class constants and offers sever
 $ npm i class-enum
 ```
 
-## Example
+## 사용방법
 
-### Define 'Animal' enum
+### 기본 정의
 
-This library allows you to create enumerations by inheriting ClassEnum<?> from a class.  
-Please enter the constant variable name as the first argument (of string type). If possible, please follow the rule.
+`ClassEnum`클래스 상속을 통하여 상수를 선언합니다. 첫 번째 인자로 unique value 문자열을 넣습니다.
 
 ```typescript
 import { ClassEnum, Enum } from 'class-enum'
@@ -32,10 +29,7 @@ class Animal extends ClassEnum<Animal> {
 }
 ```
 
-### Extending
-
-Sometimes, we need additional attributes for a value. For example, 'DOG' can have values like 'title' and 'color'.  
-Simply increase the arguments in the constructor and add the values, and that's it.
+### 확장
 
 ```typescript
 class Animal extends ClassEnum<Animal> {
@@ -65,11 +59,11 @@ console.log(`cat age: ${Animal.CAT.getAge()}`) // cat age: 6
 
 ```
 
-## API
+## 기능
 
 ### values()
 
-Retrieve all the values of the Enum as an array.
+Enum 값을 모두 가져옵니다.
 
 ```typescript
 console.log(Animal.values()) // [ Animal { value: 'DOG' }, Animal { value: 'CAT' } ]
@@ -84,10 +78,9 @@ Animal.values().map((animal: Animal) => {
 // CAT -> string
 ```
 
-### valueOf(s: string, defaultEnum = null)
+### valueOf(s: string)
 
-Retrieve the Enum using the value string. If not found, an EnumNotFound exception is raised.  
-However If you specify the defaultEnum, that will be returned instead.
+value 문자열로부터 Enum을 찾아옵니다.
 
 ```typescript
 console.log(Animal.valueOf('DOG'))
@@ -95,13 +88,25 @@ console.log(Animal.valueOf('CAT'))
 console.log(Animal.valueOf('PARROT')) // occurs EnumNotFound exception
 ```
 
+### valueOf(s: string, defaultEnum: Enum = null)
+
+value 문자열로부터 Enum을 찾아옵니다.
+
+```typescript
+console.log(Animal.valueOf('DOG'))
+console.log(Animal.valueOf('CAT'))
+console.log(Animal.valueOf('PARROT')) // occurs EnumNotFound exception
+```
+
+문자열로부터 Enum을 찾을 수 없다면 defaultEnum을 반환합니다.
+
 ```typescript
 console.log(Animal.valueOf("MONKEY", Animal.ETC))
 ```
 
 ### name()
 
-Retrieve the name of the Enum.
+value 문자열을 가져옵니다.
 
 ```typescript
 console.log(Animal.DOG.name()) // "DOG"
@@ -109,7 +114,7 @@ console.log(Animal.DOG.name()) // "DOG"
 
 ### equals(e: Enum)
 
-Compare if they are the same Enum based on the value.
+value값을 기준으로 비교합니다.
 
 ```typescript
 console.log(Animal.DOG.equals(Animal.DOG)) // true
@@ -119,7 +124,7 @@ console.log(Animal.DOG.equals(Other.DOG)) // false
 
 ## Vue.js
 
-Here's an example of displaying different names and colors based on the selected animal(Enum).
+선택된 동물(Enum)에 따라서 이름, 색상을 다르게 표시하는 예제입니다.
 
 ```vue
 <template>
@@ -152,19 +157,4 @@ class Animal extends ClassEnum<Animal> {
 const selectedAnimal = ref(Animal.DOG);
 </script>
 
-```
-
-## 테스트
-
-```bash
-$ npm run clean
-$ npm run test
-```
-
-## 빌드&배포
-
-```bash
-$ npm run clean
-$ npm run build
-$ npm publish
 ```

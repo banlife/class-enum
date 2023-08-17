@@ -1,6 +1,6 @@
 {
   "name": "class-enum",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0",
   "description": "Extendable class-enum on typescript",
   "main": "dist/index.js",
   "scripts": {
@@ -20,6 +20,7 @@
   "files": [
     "dist",
     "types",
+    "README-KR.md",
     "README.md"
   ],
   "author": "banlife <developer@ban-life.com>",

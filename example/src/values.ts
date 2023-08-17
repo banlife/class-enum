@@ -1,4 +1,4 @@
-import { ClassEnum } from '../src'
+import { ClassEnum } from '../../src'
 
 class Animal extends ClassEnum<Animal> {
   public static readonly DOG = new Animal('DOG')
@@ -6,3 +6,7 @@ class Animal extends ClassEnum<Animal> {
 }
 
 console.log(Animal.values())
+
+Animal.values<Animal>().map((animal: Animal) => {
+    console.log(animal.name())
+})
