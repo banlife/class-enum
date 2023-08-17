@@ -20,6 +20,7 @@
   "files": [
     "dist",
     "types",
+    "README-KR.md",
     "README.md"
   ],
   "author": "banlife <developer@ban-life.com>",
