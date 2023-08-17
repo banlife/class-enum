@@ -154,14 +154,14 @@ const selectedAnimal = ref(Animal.DOG);
 
 ```
 
-## 테스트
+## Test
 
 ```bash
 $ npm run clean
 $ npm run test
 ```
 
-## 빌드&배포
+## Build/Deploy
 
 ```bash
 $ npm run clean
