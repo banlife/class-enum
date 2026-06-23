@@ -1,5 +1,7 @@
 ![npm:version](https://flat.badgen.net/npm/v/class-enum)
 
+[English](README.md) | [한국어](README-KR.md) | [日本語](README-JP.md) | [中文](README-CN.md)
+
 # class-enum
 
 `class-enum`은 TypeScript enum의 대안으로 사용할 수 있는 라이브러리입니다.
