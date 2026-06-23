@@ -194,12 +194,7 @@ $ npm run test
 The TypeScript example files are compiled before execution.
 
 ```bash
-$ npm run example:equals
-$ npm run example:extension
-$ npm run example:name
-$ npm run example:valueOf
-$ npm run example:values
-$ npm run example:defineEnum
+$ npm run build:example
 ```
 
 ## Build/Deploy

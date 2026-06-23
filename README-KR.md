@@ -192,10 +192,5 @@ const selectedAnimal = ref(Animal.DOG);
 TypeScript 예제 파일은 먼저 컴파일한 뒤 실행합니다.
 
 ```bash
-$ npm run example:equals
-$ npm run example:extension
-$ npm run example:name
-$ npm run example:valueOf
-$ npm run example:values
-$ npm run example:defineEnum
+$ npm run build:example
 ```
