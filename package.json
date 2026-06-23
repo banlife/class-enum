@@ -6,9 +6,9 @@
   "scripts": {
     "test": "jest",
     "compile": "tsc",
-    "clean": "rm -rf ./dist ./types",
+    "clean": "rimraf ./dist ./types",
     "build": "npm run clean && npm run test && npm run compile",
-    "clean:example": "rm -rf ./example/dist",
+    "clean:example": "rimraf ./example/dist",
     "build:example": "npm run clean:example && tsc --project ./example"
   },
   "homepage": "https://github.com/banlife/class-enum.git",
@@ -43,6 +43,7 @@
     "eslint-config-prettier": "^8.5.0",
     "jest": "^28.1.0",
     "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
     "typescript": "4.4"
   }
 }
