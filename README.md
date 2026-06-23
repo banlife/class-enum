@@ -2,12 +2,11 @@
 
 # class-enum
 
-The "class-enum" was developed to replace the TypeScript enum.   
-Since TypeScript's enum only supports formats like numbers and strings, it is lacking in terms of feature expansion.  
-As a result, we decided to create an enum similar to Java's style that supports constructors.  
-The "class-enum" can be used in the same way as class constants and offers several convenient features.
+`class-enum` provides an alternative to TypeScript enums.
 
-## Installing
+TypeScript enums are limited to primitive values such as numbers and strings, which makes it hard to attach additional data or behavior to each enum value. `class-enum` lets you define Java-style enums with constructors, methods, and custom properties while keeping convenient helpers such as `values()`, `valueOf()`, and `equals()`.
+
+## Installation
 
 ### NPM
 
@@ -15,7 +14,32 @@ The "class-enum" can be used in the same way as class constants and offers sever
 $ npm i class-enum
 ```
 
-## Example
+## Usage
+
+`class-enum` provides two ways to define enums.
+
+For most cases, use `defineEnum`. It gives you a compact object-based syntax with `values()`, `valueOf()`, `name()`, and `equals()`.
+
+```typescript
+const Animal = defineEnum({
+    DOG: { title: 'dog' },
+    CAT: { title: 'cat' },
+})
+```
+
+Use `ClassEnum` when you need a Java-style enum with constructors, methods, or private fields.
+
+```typescript
+class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal('dog')
+
+    private constructor(private readonly title: string) {
+        super()
+    }
+}
+```
+
+## Examples
 
 ### Define enum from an object
 
@@ -39,8 +63,8 @@ Animal.DOG.equals(Animal.CAT) // false
 
 ### Define 'Animal' enum
 
-This library allows you to create enumerations by inheriting ClassEnum<?> from a class.  
-The enum name is resolved from the static property name.
+You can define an enum by extending `ClassEnum`.  
+Each enum value is resolved from its static property name.
 
 ```typescript
 import { ClassEnum } from 'class-enum'
@@ -54,8 +78,8 @@ class Animal extends ClassEnum<Animal> {
 
 ### Extending
 
-Sometimes, we need additional attributes for a value. For example, 'DOG' can have values like 'title' and 'color'.  
-Simply increase the arguments in the constructor and add the values, and that's it.
+Enum values can have additional properties. For example, `DOG` can have a `title` and an `age`.  
+Add constructor arguments and assign them to the instance as you would in a normal class.
 
 ```typescript
 class Animal extends ClassEnum<Animal> {
@@ -89,7 +113,7 @@ console.log(`cat age: ${Animal.CAT.getAge()}`) // cat age: 6
 
 ### values()
 
-Retrieve all the values of the Enum as an array.
+Returns all enum values as an array.
 
 ```typescript
 console.log(Animal.values()) // [ Animal [DOG] {}, Animal [CAT] {} ]
@@ -106,8 +130,8 @@ Animal.values().map((animal: Animal) => {
 
 ### valueOf(s: string, defaultEnum = null)
 
-Retrieve the Enum using the static property name. If not found, an EnumNotFound exception is raised.  
-However If you specify the defaultEnum, that will be returned instead.
+Returns the enum value with the given name. If no matching value exists, `EnumNotFound` is thrown.  
+If `defaultEnum` is provided, it is returned instead of throwing.
 
 ```typescript
 console.log(Animal.valueOf('DOG'))
@@ -121,7 +145,7 @@ console.log(Animal.valueOf("MONKEY", Animal.ETC))
 
 ### name()
 
-Retrieve the static property name of the Enum.
+Returns the enum value name.
 
 ```typescript
 console.log(Animal.DOG.name()) // "DOG"
@@ -137,17 +161,19 @@ console.log(String(Animal.DOG)) // "DOG"
 
 ### equals(e: Enum)
 
-Compare if they are the same Enum instance.
-It also works when state libraries such as Vue or Valtio wrap enum instances in proxies.
+Checks whether two enum values are the same.
+This also works when state libraries such as Vue or Valtio wrap enum values in proxies.
 
 ```typescript
 console.log(Animal.DOG.equals(Animal.DOG)) // true
 console.log(Animal.DOG.equals(Animal.CAT)) // false
 ```
 
-## Vue.js
+## Framework Examples
 
-Here's an example of displaying different names and colors based on the selected animal(Enum).
+### Vue.js
+
+The following example shows how to display a label and color based on the selected enum value.
 
 ```vue
 <template>
@@ -165,7 +191,7 @@ import { ref } from "vue";
 class Animal extends ClassEnum<Animal> {
   public static readonly DOG = new Animal("cute dog", "red");
   public static readonly CAT = new Animal("beautiful cat", "green");
-  public static readonly MONKEY = new Animal("big money", "blue");
+  public static readonly MONKEY = new Animal("big monkey", "blue");
 
   public readonly title!: string;
   public readonly color!: string;
@@ -182,6 +208,46 @@ const selectedAnimal = ref(Animal.DOG);
 
 ```
 
+### React
+
+The following example shows how to keep an enum value in React state.
+
+```tsx
+import { defineEnum, EnumType } from "class-enum";
+import { useState } from "react";
+
+const Animal = defineEnum({
+  DOG: { title: "cute dog", color: "red" },
+  CAT: { title: "beautiful cat", color: "green" },
+  MONKEY: { title: "big monkey", color: "blue" },
+});
+
+type Animal = EnumType<typeof Animal>;
+
+export function AnimalSelect() {
+  const [selectedAnimal, setSelectedAnimal] = useState<Animal>(Animal.DOG);
+
+  return (
+    <>
+      <select
+        value={selectedAnimal.name()}
+        onChange={(e) => setSelectedAnimal(Animal.valueOf(e.target.value))}
+      >
+        {Animal.values().map((animal) => (
+          <option key={animal.name()} value={animal.name()}>
+            {animal.title}
+          </option>
+        ))}
+      </select>
+
+      <p style={{ color: selectedAnimal.color }}>
+        selected: {selectedAnimal.name()}
+      </p>
+    </>
+  );
+}
+```
+
 ## Test
 
 ```bash
@@ -191,16 +257,15 @@ $ npm run test
 
 ## Run Examples
 
-The TypeScript example files are compiled before execution.
+Compile the TypeScript examples before running them.
 
 ```bash
 $ npm run build:example
 ```
 
-## Build/Deploy
+## Build and Publish
 
 ```bash
-$ npm run clean
 $ npm run build
 $ npm publish
 ```
