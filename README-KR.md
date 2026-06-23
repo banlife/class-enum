@@ -15,6 +15,26 @@ $ npm i class-enum
 
 ## 사용방법
 
+### 객체로 정의
+
+`defineEnum`을 사용하면 클래스 선언 없이 Enum을 정의할 수 있습니다.
+
+```typescript
+import { defineEnum } from 'class-enum'
+
+const Animal = defineEnum({
+    DOG: { title: '강아지' },
+    CAT: { title: '고양이' },
+    MONKEY: { title: '원숭이' },
+})
+
+Animal.DOG.name() // "DOG"
+Animal.DOG.title // "강아지"
+Animal.values() // [ Object [DOG] { title: '강아지' }, Object [CAT] { title: '고양이' }, Object [MONKEY] { title: '원숭이' } ]
+Animal.valueOf('CAT') // Animal.CAT
+Animal.DOG.equals(Animal.CAT) // false
+```
+
 ### 기본 정의
 
 `ClassEnum`클래스 상속을 통하여 상수를 선언합니다. Enum 이름은 static property 이름을 사용합니다.
@@ -177,4 +197,5 @@ $ npm run example:extension
 $ npm run example:name
 $ npm run example:valueOf
 $ npm run example:values
+$ npm run example:defineEnum
 ```

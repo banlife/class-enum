@@ -9,6 +9,7 @@
     "clean": "rm -rf ./dist ./types",
     "build": "npm run clean && npm run test && npm run compile",
     "build:example": "rm -rf ./example/dist && tsc --project ./example",
+    "example:defineEnum": "npm run build:example && node example/dist/example/src/defineEnum.js",
     "example:equals": "npm run build:example && node example/dist/example/src/equals.js",
     "example:extension": "npm run build:example && node example/dist/example/src/extension.js",
     "example:name": "npm run build:example && node example/dist/example/src/name.js",

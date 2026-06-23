@@ -17,6 +17,26 @@ $ npm i class-enum
 
 ## Example
 
+### Define enum from an object
+
+Use `defineEnum` to define an enum without declaring a class.
+
+```typescript
+import { defineEnum } from 'class-enum'
+
+const Animal = defineEnum({
+    DOG: { title: 'dog' },
+    CAT: { title: 'cat' },
+    MONKEY: { title: 'monkey' },
+})
+
+Animal.DOG.name() // "DOG"
+Animal.DOG.title // "dog"
+Animal.values() // [ Object [DOG] { title: 'dog' }, Object [CAT] { title: 'cat' }, Object [MONKEY] { title: 'monkey' } ]
+Animal.valueOf('CAT') // Animal.CAT
+Animal.DOG.equals(Animal.CAT) // false
+```
+
 ### Define 'Animal' enum
 
 This library allows you to create enumerations by inheriting ClassEnum<?> from a class.  
@@ -179,6 +199,7 @@ $ npm run example:extension
 $ npm run example:name
 $ npm run example:valueOf
 $ npm run example:values
+$ npm run example:defineEnum
 ```
 
 ## Build/Deploy
