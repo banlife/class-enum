@@ -2,235 +2,223 @@ import { ClassEnum } from '../src'
 import { EnumNotFound } from '../src/exception'
 
 test('Enum simple reference matching', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
+    public static readonly DOG = new Animal()
   }
 
-  // when
-  const dog = Animal.DOG
-
-  // expected
-  expect(dog).toEqual(Animal.DOG)
+  expect(Animal.DOG).toBe(Animal.DOG)
 })
 
-test('Decorator extend class', () => {
-  // given
+test('Enum name is resolved from static property name', () => {
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
   }
 
-  // expected
-  expect(Animal.DOG).toEqual(Animal.DOG)
-  expect(Animal.DOG.name()).toEqual('DOG')
-})
-
-test('Enum name', () => {
-  // given
-  class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
-  }
-
-  // expected
   expect(Animal.DOG.name()).toBe('DOG')
+  expect(Animal.CAT.name()).toBe('CAT')
 })
 
 test('Enum equals', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
   }
 
-  class Other extends ClassEnum<Other> {
-    public static readonly DOG = new Animal('DOG')
-    public static readonly CAT = new Animal('CAT')
-  }
-
-  // expected
   expect(Animal.DOG.equals(Animal.DOG)).toBeTruthy()
-  expect(Animal.DOG.equals(Other.DOG)).toBeFalsy()
+  expect(Animal.DOG.equals(Animal.CAT)).toBeFalsy()
 })
 
 test('Enum simple reference matching with title', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
+    public static readonly DOG = new Animal('my dog')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
-  const dog = Animal.DOG
-
-  // expected
-  expect(dog).toEqual(Animal.DOG)
+  expect(Animal.DOG).toBe(Animal.DOG)
+  expect(Animal.DOG.title).toBe('my dog')
 })
 
 test('The count of ClassEnum types', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const animals = Animal.values()
 
-  // expected
   expect(animals.length).toBe(2)
 })
 
-test('The values contains all values', () => {
-  // given
+test('The values contains all values in declaration order', () => {
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const animals = Animal.values()
 
-  // expected
   expect(animals[0]).toBe(Animal.DOG)
   expect(animals[1]).toBe(Animal.CAT)
 })
 
 test('Collects only ClassEnum types', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
     public static readonly OTHER = 1
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const animals = Animal.values()
 
-  // expected
   expect(animals.length).toBe(2)
 })
 
 test('Collects only same types of ClassEnum', () => {
-  // given
   class Other extends ClassEnum<Other> {
-    public static readonly OTHER = new Other('OTHER', 'other')
+    public static readonly OTHER = new Other('other')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'dog')
-    public static readonly CAT = new Animal('CAT', 'cat')
+    public static readonly DOG = new Animal('dog')
+    public static readonly CAT = new Animal('cat')
+    public static readonly OTHER = Other.OTHER
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const animals = Animal.values()
 
-  // expected
   expect(animals.length).toBe(2)
 })
 
 test("The dog-enum can't be cat-enum", () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const dog = Animal.valueOf('DOG')
 
-  // expected
-  expect(dog).not.toEqual(Animal.CAT)
+  expect(dog).not.toBe(Animal.CAT)
 })
 
 test('If the enum is not found, error occurs', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly CAT = new Animal('CAT', 'my cat')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly CAT = new Animal('my cat')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
-  const mouse = () => {
-    Animal.valueOf('MOUSE')
-  }
-
-  // expected
-  expect(mouse).toThrow(EnumNotFound)
+  expect(() => Animal.valueOf('MOUSE')).toThrow(EnumNotFound)
 })
 
 test('Returns ETC if specified defaultValue in valueOf', () => {
-  // given
   class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'my dog')
-    public static readonly ETC = new Animal('ETC', 'etc')
+    public static readonly DOG = new Animal('my dog')
+    public static readonly ETC = new Animal('etc')
 
-    readonly title!: string
+    readonly title: string
 
-    public constructor(value: string, title: string) {
-      super(value)
+    public constructor(title: string) {
+      super()
       this.title = title
     }
   }
 
-  // when
   const etc = Animal.valueOf('MOUSE', Animal.ETC)
 
-  // expected
-  expect(etc).toEqual(Animal.ETC)
+  expect(etc).toBe(Animal.ETC)
+})
+
+test('Enum instances do not expose a value property', () => {
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal()
+  }
+
+  expect(Object.prototype.hasOwnProperty.call(Animal.DOG, 'value')).toBeFalsy()
+})
+
+test('Enum string representation uses enum name', () => {
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal()
+  }
+
+  expect(String(Animal.DOG)).toBe('DOG')
+  expect(Object.prototype.toString.call(Animal.DOG)).toBe('[object DOG]')
+})
+
+test('Enum name and equals work with proxied enum instances', () => {
+  class Animal extends ClassEnum<Animal> {
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
+  }
+
+  const proxyDog = new Proxy(Animal.DOG, {})
+
+  expect(proxyDog.name()).toBe('DOG')
+  expect(String(proxyDog)).toBe('DOG')
+  expect(Animal.DOG.equals(proxyDog)).toBeTruthy()
+  expect(proxyDog.equals(Animal.DOG)).toBeTruthy()
+  expect(Animal.CAT.equals(proxyDog)).toBeFalsy()
+})
+
+test('Enum name must be declared as static property', () => {
+  class Animal extends ClassEnum<Animal> {}
+
+  const dog = new Animal()
+
+  expect(() => dog.name()).toThrow(EnumNotFound)
 })

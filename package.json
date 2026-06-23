@@ -7,8 +7,13 @@
     "test": "jest",
     "compile": "tsc",
     "clean": "rm -rf ./dist ./types",
-    "build": "rm -rf ./dist ./types && jest && tsc",
-    "build:example": "rm -rf ./example/dist && tsc --project ./example"
+    "build": "npm run clean && npm run test && npm run compile",
+    "build:example": "rm -rf ./example/dist && tsc --project ./example",
+    "example:equals": "npm run build:example && node example/dist/example/src/equals.js",
+    "example:extension": "npm run build:example && node example/dist/example/src/extension.js",
+    "example:name": "npm run build:example && node example/dist/example/src/name.js",
+    "example:valueOf": "npm run build:example && node example/dist/example/src/valueOf.js",
+    "example:values": "npm run build:example && node example/dist/example/src/values.js"
   },
   "homepage": "https://github.com/banlife/class-enum.git",
   "keywords": [
@@ -39,13 +44,9 @@
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",
-    "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.5.0",
     "jest": "^28.1.0",
     "prettier": "^2.6.2",
     "typescript": "4.4"
-  },
-  "dependencies": {
-    "npm": "^10.2.4"
   }
 }

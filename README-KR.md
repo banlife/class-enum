@@ -17,14 +17,14 @@ $ npm i class-enum
 
 ### 기본 정의
 
-`ClassEnum`클래스 상속을 통하여 상수를 선언합니다. 첫 번째 인자로 unique value 문자열을 넣습니다.
+`ClassEnum`클래스 상속을 통하여 상수를 선언합니다. Enum 이름은 static property 이름을 사용합니다.
 
 ```typescript
-import { ClassEnum, Enum } from 'class-enum'
+import { ClassEnum } from 'class-enum'
 
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal("DOG")
-    public static readonly CAT = new Animal("CAT")
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
     public static readonly MOUSE = "foo" // ignored in ClassEnum
 }
 ```
@@ -33,14 +33,14 @@ class Animal extends ClassEnum<Animal> {
 
 ```typescript
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'My Dog', 3)
-    public static readonly CAT = new Animal('CAT', 'Cute Cat', 6)
+    public static readonly DOG = new Animal('My Dog', 3)
+    public static readonly CAT = new Animal('Cute Cat', 6)
 
     private readonly title!: string
     private readonly age!: number
 
-    public constructor(value: string, title: string, age: number) {
-        super(value)
+    public constructor(title: string, age: number) {
+        super()
         this.title = title
         this.age = age
     }
@@ -66,7 +66,7 @@ console.log(`cat age: ${Animal.CAT.getAge()}`) // cat age: 6
 Enum 값을 모두 가져옵니다.
 
 ```typescript
-console.log(Animal.values()) // [ Animal { value: 'DOG' }, Animal { value: 'CAT' } ]
+console.log(Animal.values()) // [ Animal [DOG] {}, Animal [CAT] {} ]
 ```
 
 ```typescript
@@ -80,7 +80,7 @@ Animal.values().map((animal: Animal) => {
 
 ### valueOf(s: string)
 
-value 문자열로부터 Enum을 찾아옵니다.
+static property 이름으로부터 Enum을 찾아옵니다.
 
 ```typescript
 console.log(Animal.valueOf('DOG'))
@@ -90,7 +90,7 @@ console.log(Animal.valueOf('PARROT')) // occurs EnumNotFound exception
 
 ### valueOf(s: string, defaultEnum: Enum = null)
 
-value 문자열로부터 Enum을 찾아옵니다.
+static property 이름으로부터 Enum을 찾아옵니다.
 
 ```typescript
 console.log(Animal.valueOf('DOG'))
@@ -106,20 +106,28 @@ console.log(Animal.valueOf("MONKEY", Animal.ETC))
 
 ### name()
 
-value 문자열을 가져옵니다.
+static property 이름을 가져옵니다.
 
 ```typescript
 console.log(Animal.DOG.name()) // "DOG"
 ```
 
+### toString()
+
+Enum 이름을 문자열로 가져옵니다.
+
+```typescript
+console.log(String(Animal.DOG)) // "DOG"
+```
+
 ### equals(e: Enum)
 
-value값을 기준으로 비교합니다.
+같은 Enum 인스턴스인지 비교합니다.
+Vue, Valtio처럼 상태 값을 Proxy로 감싸는 환경에서도 같은 Enum 이름이면 동일하게 비교됩니다.
 
 ```typescript
 console.log(Animal.DOG.equals(Animal.DOG)) // true
 console.log(Animal.DOG.equals(Animal.CAT)) // false
-console.log(Animal.DOG.equals(Other.DOG)) // false
 ```
 
 ## Vue.js
@@ -140,15 +148,15 @@ import { ClassEnum } from "class-enum";
 import { ref } from "vue";
 
 class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal("DOG", "cute dog", "red");
-  public static readonly CAT = new Animal("CAT", "beautiful cat", "green");
-  public static readonly MONKEY = new Animal("MONKEY", "big money", "blue");
+  public static readonly DOG = new Animal("cute dog", "red");
+  public static readonly CAT = new Animal("beautiful cat", "green");
+  public static readonly MONKEY = new Animal("big money", "blue");
 
   public readonly title!: string;
   public readonly color!: string;
 
-  public constructor(value: string, title: string, color: string) {
-    super(value);
+  public constructor(title: string, color: string) {
+    super();
     this.title = title;
     this.color = color;
   }
@@ -157,4 +165,16 @@ class Animal extends ClassEnum<Animal> {
 const selectedAnimal = ref(Animal.DOG);
 </script>
 
+```
+
+## 예제 실행
+
+TypeScript 예제 파일은 먼저 컴파일한 뒤 실행합니다.
+
+```bash
+$ npm run example:equals
+$ npm run example:extension
+$ npm run example:name
+$ npm run example:valueOf
+$ npm run example:values
 ```

@@ -20,14 +20,14 @@ $ npm i class-enum
 ### Define 'Animal' enum
 
 This library allows you to create enumerations by inheriting ClassEnum<?> from a class.  
-Please enter the constant variable name as the first argument (of string type). If possible, please follow the rule.
+The enum name is resolved from the static property name.
 
 ```typescript
-import { ClassEnum, Enum } from 'class-enum'
+import { ClassEnum } from 'class-enum'
 
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal("DOG")
-    public static readonly CAT = new Animal("CAT")
+    public static readonly DOG = new Animal()
+    public static readonly CAT = new Animal()
     public static readonly MOUSE = "foo" // ignored in ClassEnum
 }
 ```
@@ -39,14 +39,14 @@ Simply increase the arguments in the constructor and add the values, and that's 
 
 ```typescript
 class Animal extends ClassEnum<Animal> {
-    public static readonly DOG = new Animal('DOG', 'My Dog', 3)
-    public static readonly CAT = new Animal('CAT', 'Cute Cat', 6)
+    public static readonly DOG = new Animal('My Dog', 3)
+    public static readonly CAT = new Animal('Cute Cat', 6)
 
     private readonly title!: string
     private readonly age!: number
 
-    public constructor(value: string, title: string, age: number) {
-        super(value)
+    public constructor(title: string, age: number) {
+        super()
         this.title = title
         this.age = age
     }
@@ -72,7 +72,7 @@ console.log(`cat age: ${Animal.CAT.getAge()}`) // cat age: 6
 Retrieve all the values of the Enum as an array.
 
 ```typescript
-console.log(Animal.values()) // [ Animal { value: 'DOG' }, Animal { value: 'CAT' } ]
+console.log(Animal.values()) // [ Animal [DOG] {}, Animal [CAT] {} ]
 ```
 
 ```typescript
@@ -86,7 +86,7 @@ Animal.values().map((animal: Animal) => {
 
 ### valueOf(s: string, defaultEnum = null)
 
-Retrieve the Enum using the value string. If not found, an EnumNotFound exception is raised.  
+Retrieve the Enum using the static property name. If not found, an EnumNotFound exception is raised.  
 However If you specify the defaultEnum, that will be returned instead.
 
 ```typescript
@@ -101,20 +101,28 @@ console.log(Animal.valueOf("MONKEY", Animal.ETC))
 
 ### name()
 
-Retrieve the name of the Enum.
+Retrieve the static property name of the Enum.
 
 ```typescript
 console.log(Animal.DOG.name()) // "DOG"
 ```
 
+### toString()
+
+Retrieve the enum name as a string.
+
+```typescript
+console.log(String(Animal.DOG)) // "DOG"
+```
+
 ### equals(e: Enum)
 
-Compare if they are the same Enum based on the value.
+Compare if they are the same Enum instance.
+It also works when state libraries such as Vue or Valtio wrap enum instances in proxies.
 
 ```typescript
 console.log(Animal.DOG.equals(Animal.DOG)) // true
 console.log(Animal.DOG.equals(Animal.CAT)) // false
-console.log(Animal.DOG.equals(Other.DOG)) // false
 ```
 
 ## Vue.js
@@ -135,15 +143,15 @@ import { ClassEnum } from "class-enum";
 import { ref } from "vue";
 
 class Animal extends ClassEnum<Animal> {
-  public static readonly DOG = new Animal("DOG", "cute dog", "red");
-  public static readonly CAT = new Animal("CAT", "beautiful cat", "green");
-  public static readonly MONKEY = new Animal("MONKEY", "big money", "blue");
+  public static readonly DOG = new Animal("cute dog", "red");
+  public static readonly CAT = new Animal("beautiful cat", "green");
+  public static readonly MONKEY = new Animal("big money", "blue");
 
   public readonly title!: string;
   public readonly color!: string;
 
-  public constructor(value: string, title: string, color: string) {
-    super(value);
+  public constructor(title: string, color: string) {
+    super();
     this.title = title;
     this.color = color;
   }
@@ -159,6 +167,18 @@ const selectedAnimal = ref(Animal.DOG);
 ```bash
 $ npm run clean
 $ npm run test
+```
+
+## Run Examples
+
+The TypeScript example files are compiled before execution.
+
+```bash
+$ npm run example:equals
+$ npm run example:extension
+$ npm run example:name
+$ npm run example:valueOf
+$ npm run example:values
 ```
 
 ## Build/Deploy

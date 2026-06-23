@@ -1,6 +1,6 @@
 module.exports = {
+  watchman: false,
   testMatch: [
-    '<rootDir>/tests/**/*.test.[jt]s?(x)',
     '<rootDir>/tests/**/*.test.[jt]s?(x)',
   ],
 }
